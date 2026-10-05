@@ -15,6 +15,13 @@ impl std::ops::Deref for WorkspaceName {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct WorkspaceId(pub(crate) i64);
 
+impl WorkspaceId {
+    /// Get the inner id value
+    pub fn raw(&self) -> i64 {
+        self.0
+    }
+}
+
 /// The name of a monitor.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MonitorName(pub(crate) String);
@@ -29,6 +36,13 @@ impl std::ops::Deref for MonitorName {
 /// The id of a monitor.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MonitorId(pub(crate) i64);
+
+impl MonitorId {
+    /// Get the inner id value
+    pub fn raw(&self) -> i64 {
+        self.0
+    }
+}
 
 /// The title of a window.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
