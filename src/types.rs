@@ -12,7 +12,7 @@ impl std::ops::Deref for WorkspaceName {
 }
 
 /// The id of a workspace.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct WorkspaceId(pub(crate) i64);
 
 impl WorkspaceId {
@@ -34,7 +34,7 @@ impl std::ops::Deref for MonitorName {
 }
 
 /// The id of a monitor.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MonitorId(pub(crate) i64);
 
 impl MonitorId {
@@ -67,7 +67,7 @@ impl std::ops::Deref for WindowClass {
 }
 
 /// The address of a window, a unique hex handle to identify it.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct WindowAddress(u64);
 
 impl std::str::FromStr for WindowAddress {
@@ -129,7 +129,7 @@ impl std::ops::Deref for SubmapName {
 }
 
 /// Owner of a screen cast.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Owner {
     Monitor,
     Window,
