@@ -2,6 +2,8 @@
 
 /// The name of a workspace.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct WorkspaceName(pub(crate) String);
 
 impl std::ops::Deref for WorkspaceName {
@@ -13,6 +15,8 @@ impl std::ops::Deref for WorkspaceName {
 
 /// The id of a workspace.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct WorkspaceId(pub(crate) i64);
 
 impl WorkspaceId {
@@ -24,6 +28,8 @@ impl WorkspaceId {
 
 /// The name of a monitor.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct MonitorName(pub(crate) String);
 
 impl std::ops::Deref for MonitorName {
@@ -35,6 +41,8 @@ impl std::ops::Deref for MonitorName {
 
 /// The id of a monitor.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct MonitorId(pub(crate) i64);
 
 impl MonitorId {
@@ -46,6 +54,8 @@ impl MonitorId {
 
 /// The title of a window.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct WindowTitle(pub(crate) String);
 
 impl std::ops::Deref for WindowTitle {
@@ -57,6 +67,8 @@ impl std::ops::Deref for WindowTitle {
 
 /// The title of a window.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct WindowClass(pub(crate) String);
 
 impl std::ops::Deref for WindowClass {
@@ -68,6 +80,8 @@ impl std::ops::Deref for WindowClass {
 
 /// The address of a window, a unique hex handle to identify it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct WindowAddress(u64);
 
 impl std::str::FromStr for WindowAddress {
@@ -86,6 +100,8 @@ impl std::fmt::Display for WindowAddress {
 
 /// The name of a keyboard.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct KeyboardName(pub(crate) String);
 
 impl std::ops::Deref for KeyboardName {
@@ -97,6 +113,8 @@ impl std::ops::Deref for KeyboardName {
 
 /// The name of a layout.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct LayoutName(pub(crate) String);
 
 impl std::ops::Deref for LayoutName {
@@ -108,6 +126,8 @@ impl std::ops::Deref for LayoutName {
 
 /// The Namespace.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct Namespace(pub(crate) String);
 
 impl std::ops::Deref for Namespace {
@@ -119,6 +139,8 @@ impl std::ops::Deref for Namespace {
 
 /// The Name of a Submap.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(transparent)]
 pub struct SubmapName(pub(crate) String);
 
 impl std::ops::Deref for SubmapName {
@@ -130,6 +152,8 @@ impl std::ops::Deref for SubmapName {
 
 /// Owner of a screen cast.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Owner {
     Monitor,
     Window,
