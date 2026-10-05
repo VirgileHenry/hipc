@@ -23,14 +23,14 @@ pub enum HyprlandEvent {
         /// MONNAME
         monitor: crate::types::MonitorName,
         /// WORKSPACENAME
-        worskpace: crate::types::WorkspaceName,
+        workspace: crate::types::WorkspaceName,
     },
     /// Emitted on the active monitor being changed.
     FocusedMonitorV2 {
         /// MONNAME
         monitor: crate::types::MonitorName,
         /// WORKSPACENAME
-        worskpace: crate::types::WorkspaceId,
+        workspace: crate::types::WorkspaceId,
     },
     /// Emitted on the active window being changed.
     ActiveWindow {

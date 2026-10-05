@@ -53,7 +53,7 @@ impl std::str::FromStr for crate::HyprlandEvent {
 
                 Ok(Self::FocusedMonitor {
                     monitor: crate::types::MonitorName(monitor.to_string()),
-                    worskpace: crate::types::WorkspaceName(workspace.to_string()),
+                    workspace: crate::types::WorkspaceName(workspace.to_string()),
                 })
             }
             "focusedmonv2" => {
@@ -72,7 +72,7 @@ impl std::str::FromStr for crate::HyprlandEvent {
 
                 Ok(Self::FocusedMonitorV2 {
                     monitor: crate::types::MonitorName(monitor.to_string()),
-                    worskpace: crate::types::WorkspaceId(workspace),
+                    workspace: crate::types::WorkspaceId(workspace),
                 })
             }
             "activewindow" => {

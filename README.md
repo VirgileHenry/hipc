@@ -13,7 +13,7 @@ let socket = hipc::HyprlandEventSocket::connect();
 /* Read will wait for incoming events and stop the current thread */
 for event in socket.read() {
     match event {
-        hipc::HyprlandEvent::FocusedMonitorV2 { monitor, workspace } => println!("Switched to monitor {monitor} (holding worskpace {workspace})"),
+        hipc::HyprlandEvent::FocusedMonitorV2 { monitor, workspace } => println!("Switched to monitor {monitor} (holding workspace {workspace})"),
         other => {/* Whataver you want */}
     }
 }
