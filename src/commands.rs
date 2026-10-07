@@ -1,4 +1,5 @@
-pub mod monitors;
+#[cfg(test)]
+mod test;
 
 /// Hyprland socket to send commands.
 ///
@@ -20,26 +21,38 @@ impl HyprlandSocket {
         Ok(Self(socket_path))
     }
 
-    fn socket(&self) -> std::io::Result<std::os::unix::net::UnixStream> {
-        std::os::unix::net::UnixStream::connect(&self.0)
-    }
-
-    /// Request all monitors with the `monitors` command.
-    pub fn monitors(&self) -> std::io::Result<Vec<crate::commands::monitors::Monitor>> {
+    /// Internal utility to connect to the socket, send a command and get the response
+    fn command(&self, command: &str) -> std::io::Result<String> {
         use std::io::Read;
         use std::io::Write;
 
-        let mut socket = self.socket()?;
+        let mut socket = std::os::unix::net::UnixStream::connect(&self.0)?;
 
-        socket.write_all(b"j/monitors")?;
+        socket.write_all(command.as_bytes())?;
         let mut out = String::new();
         socket.read_to_string(&mut out)?;
 
+        Ok(out)
+    }
+
+    pub fn active_window(&self) -> std::io::Result<crate::types::ActiveWindow> {
+        let out = self.command("j/activewindow")?;
+        serde_json::from_str(&out).map_err(std::io::Error::other)
+    }
+
+    /// Request all monitors with the `monitors` command.
+    pub fn monitors(&self) -> std::io::Result<Vec<crate::types::Monitor>> {
+        let out = self.command("j/monitors")?;
         serde_json::from_str(&out).map_err(std::io::Error::other)
     }
 }
 
 /// The `hyprctl monitors` command.
-pub fn monitors() -> std::io::Result<Vec<crate::commands::monitors::Monitor>> {
+pub fn monitors() -> std::io::Result<Vec<crate::types::Monitor>> {
     HyprlandSocket::connect()?.monitors()
+}
+
+/// The `hyprctl activewindow` command.
+pub fn active_window() -> std::io::Result<crate::types::ActiveWindow> {
+    HyprlandSocket::connect()?.active_window()
 }

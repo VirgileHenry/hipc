@@ -1,173 +1,49 @@
 //! Common types used by Hyprland.
 
-/// The name of a workspace.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct WorkspaceName(pub(crate) String);
+mod active_window;
+mod content_type;
+mod direct_scanout_blocked_reason;
+mod fullscreen_mode;
+mod keyboard_name;
+mod layout_name;
+mod monitor;
+mod monitor_id;
+mod monitor_name;
+mod namespace;
+mod owner;
+mod position;
+mod reserved_area;
+mod size;
+mod solitary_blocked_reason;
+mod submap_name;
+mod tearing_blocked_reason;
+mod window_address;
+mod window_class;
+mod window_title;
+mod workspace_id;
+mod workspace_id_and_name;
+mod workspace_name;
 
-impl std::ops::Deref for WorkspaceName {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The id of a workspace.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct WorkspaceId(pub(crate) i64);
-
-impl WorkspaceId {
-    /// Get the inner id value
-    pub fn raw(&self) -> i64 {
-        self.0
-    }
-}
-
-/// The name of a monitor.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct MonitorName(pub(crate) String);
-
-impl std::ops::Deref for MonitorName {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The id of a monitor.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct MonitorId(pub(crate) i64);
-
-impl MonitorId {
-    /// Get the inner id value
-    pub fn raw(&self) -> i64 {
-        self.0
-    }
-}
-
-/// The title of a window.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct WindowTitle(pub(crate) String);
-
-impl std::ops::Deref for WindowTitle {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The title of a window.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct WindowClass(pub(crate) String);
-
-impl std::ops::Deref for WindowClass {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The address of a window, a unique hex handle to identify it.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct WindowAddress(u64);
-
-impl std::str::FromStr for WindowAddress {
-    type Err = std::num::ParseIntError;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let hex = s.strip_prefix("0x").unwrap_or(s);
-        u64::from_str_radix(hex, 16).map(Self)
-    }
-}
-
-impl std::fmt::Display for WindowAddress {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "0x{:x}", self.0)
-    }
-}
-
-/// The name of a keyboard.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct KeyboardName(pub(crate) String);
-
-impl std::ops::Deref for KeyboardName {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The name of a layout.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct LayoutName(pub(crate) String);
-
-impl std::ops::Deref for LayoutName {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The Namespace.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct Namespace(pub(crate) String);
-
-impl std::ops::Deref for Namespace {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// The Name of a Submap.
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(transparent)]
-pub struct SubmapName(pub(crate) String);
-
-impl std::ops::Deref for SubmapName {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-/// Owner of a screen cast.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum Owner {
-    Monitor,
-    Window,
-    Region,
-}
-
-impl std::str::FromStr for Owner {
-    type Err = ();
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "monitor" => Ok(Self::Monitor),
-            "window" => Ok(Self::Window),
-            "region" => Ok(Self::Region),
-            _ => Err(()),
-        }
-    }
-}
+pub use active_window::ActiveWindow;
+pub use content_type::ContentType;
+pub use direct_scanout_blocked_reason::DirectScanoutBlockedReason;
+pub use fullscreen_mode::FullscreenMode;
+pub use keyboard_name::KeyboardName;
+pub use layout_name::LayoutName;
+pub use monitor::Monitor;
+pub use monitor_id::MonitorId;
+pub use monitor_name::MonitorName;
+pub use namespace::Namespace;
+pub use owner::Owner;
+pub use position::Position;
+pub use reserved_area::ReservedArea;
+pub use size::Size;
+pub use solitary_blocked_reason::SolitaryBlockedReason;
+pub use submap_name::SubmapName;
+pub use tearing_blocked_reason::TearingBlockedReason;
+pub use window_address::WindowAddress;
+pub use window_class::WindowClass;
+pub use window_title::WindowTitle;
+pub use workspace_id::WorkspaceId;
+pub use workspace_id_and_name::WorkspaceIdAndName;
+pub use workspace_name::WorkspaceName;

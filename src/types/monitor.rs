@@ -24,10 +24,10 @@ pub struct Monitor {
     pub x: i32,
     /// Position in the global layout, in logical pixels. Can be negative.
     pub y: i32,
-    pub active_workspace: MonitorWorkspace,
+    pub active_workspace: crate::types::WorkspaceIdAndName,
     /// `id: 0` and an empty name when no special workspace is open.
-    pub special_workspace: MonitorWorkspace,
-    pub reserved: Reserved,
+    pub special_workspace: crate::types::WorkspaceIdAndName,
+    pub reserved: crate::types::ReservedArea,
     pub scale: f64,
     /// `wl_output` transform, 0 to 7.
     pub transform: u8,
@@ -38,14 +38,14 @@ pub struct Monitor {
     #[serde(deserialize_with = "deserialize_null_address")]
     pub solitary: Option<crate::types::WindowAddress>,
     /// `None` when solitary mode isn't blocked.
-    pub solitary_blocked_by: Option<Vec<SolitaryBlockedReason>>,
+    pub solitary_blocked_by: Option<Vec<crate::types::SolitaryBlockedReason>>,
     pub actively_tearing: bool,
     /// `None` when tearing isn't blocked.
-    pub tearing_blocked_by: Option<Vec<TearingBlockedReason>>,
+    pub tearing_blocked_by: Option<Vec<crate::types::TearingBlockedReason>>,
     /// Hex pointer to the internal surface being directly scanned out, `"0"` if none.
     pub direct_scanout_to: String,
     /// `None` when direct scanout isn't blocked.
-    pub direct_scanout_blocked_by: Option<Vec<DirectScanoutBlockedReason>>,
+    pub direct_scanout_blocked_by: Option<Vec<crate::types::DirectScanoutBlockedReason>>,
     pub disabled: bool,
     /// DRM format, one of `XRGB8888`, `XBGR8888`, `XRGB2101010`, `XBGR2101010` or `Invalid`.
     pub current_format: String,
@@ -59,92 +59,6 @@ pub struct Monitor {
     pub sdr_min_luminance: f64,
     pub sdr_max_luminance: f64,
     pub hardware_cursors_in_use: bool,
-}
-
-/// The workspace reference embedded in a monitor.
-#[derive(Debug, Clone)]
-#[derive(serde::Deserialize)]
-pub struct MonitorWorkspace {
-    pub id: crate::types::WorkspaceId,
-    pub name: crate::types::WorkspaceName,
-}
-
-/// Area reserved on each edge (bars, etc.), in logical pixels.
-///
-/// Sent as an array in the order `[left, top, right, bottom]`.
-#[derive(Debug, Clone, Copy)]
-#[derive(serde::Deserialize)]
-pub struct Reserved {
-    pub left: i32,
-    pub top: i32,
-    pub right: i32,
-    pub bottom: i32,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum SolitaryBlockedReason {
-    Unknown,
-    Notification,
-    Lock,
-    Workspace,
-    Windowed,
-    Dnd,
-    Special,
-    Alpha,
-    Offset,
-    Candidate,
-    Opaque,
-    Transform,
-    Overlays,
-    Float,
-    Workspaces,
-    Surfaces,
-    Configerror,
-    Fadeout,
-    /// A reason added in a newer Hyprland version.
-    #[serde(other)]
-    Other,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum TearingBlockedReason {
-    Unknown,
-    NotTorn,
-    User,
-    Zoom,
-    Support,
-    Candidate,
-    Window,
-    HwCursor,
-    /// A reason added in a newer Hyprland version.
-    #[serde(other)]
-    Other,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-pub enum DirectScanoutBlockedReason {
-    Unknown,
-    User,
-    Windowed,
-    Content,
-    Mirror,
-    Record,
-    Sw,
-    Candidate,
-    Surface,
-    Transform,
-    Dma,
-    Failed,
-    Cm,
-    /// A reason added in a newer Hyprland version.
-    #[serde(other)]
-    Other,
 }
 
 /// `"0"` means no window.
