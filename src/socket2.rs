@@ -34,4 +34,9 @@ impl HyprlandEventSocket {
             Err(e) => Err(std::io::Error::other(format!("Failed to parse hyprland event: {e}"))),
         }
     }
+
+    /// Checks if the buffer is empty or not.
+    pub fn is_empty(&self) -> bool {
+        self.0.buffer().is_empty()
+    }
 }
