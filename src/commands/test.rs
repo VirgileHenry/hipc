@@ -10,4 +10,8 @@ fn test_all_commands() {
         Ok(_) => {}
         Err(e) => panic!("Expected monitors, found error: {e}"),
     }
+    match workspace() {
+        Ok(_) => {}
+        Err(e) => panic!("Expected workspaces, found error: {e}"),
+    }
 }
