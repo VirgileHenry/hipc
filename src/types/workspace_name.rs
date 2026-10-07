@@ -10,3 +10,15 @@ impl std::ops::Deref for WorkspaceName {
         &self.0
     }
 }
+
+impl std::borrow::Borrow<String> for WorkspaceName {
+    fn borrow(&self) -> &String {
+        &self.0
+    }
+}
+
+impl std::borrow::BorrowMut<String> for WorkspaceName {
+    fn borrow_mut(&mut self) -> &mut String {
+        &mut self.0
+    }
+}

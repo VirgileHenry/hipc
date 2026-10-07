@@ -10,3 +10,15 @@ impl std::ops::Deref for WindowClass {
         &self.0
     }
 }
+
+impl std::borrow::Borrow<String> for WindowClass {
+    fn borrow(&self) -> &String {
+        &self.0
+    }
+}
+
+impl std::borrow::BorrowMut<String> for WindowClass {
+    fn borrow_mut(&mut self) -> &mut String {
+        &mut self.0
+    }
+}

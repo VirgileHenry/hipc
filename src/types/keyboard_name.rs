@@ -10,3 +10,15 @@ impl std::ops::Deref for KeyboardName {
         &self.0
     }
 }
+
+impl std::borrow::Borrow<String> for KeyboardName {
+    fn borrow(&self) -> &String {
+        &self.0
+    }
+}
+
+impl std::borrow::BorrowMut<String> for KeyboardName {
+    fn borrow_mut(&mut self) -> &mut String {
+        &mut self.0
+    }
+}
