@@ -36,13 +36,13 @@ impl HyprlandSocket {
     }
 
     /// Request the active window with the `activewindow` command.
-    pub fn active_window(&self) -> std::io::Result<crate::types::ActiveWindow> {
+    pub fn active_window(&self) -> std::io::Result<crate::types::Client> {
         let out = self.command("j/activewindow")?;
         serde_json::from_str(&out).map_err(std::io::Error::other)
     }
 
     /// Request the active window with the `activewindow` command.
-    pub fn clients(&self) -> std::io::Result<Vec<crate::types::ActiveWindow>> {
+    pub fn clients(&self) -> std::io::Result<Vec<crate::types::Client>> {
         let out = self.command("j/clients")?;
         serde_json::from_str(&out).map_err(std::io::Error::other)
     }
@@ -61,12 +61,12 @@ impl HyprlandSocket {
 }
 
 /// The `hyprctl activewindow` command.
-pub fn active_window() -> std::io::Result<crate::types::ActiveWindow> {
+pub fn active_window() -> std::io::Result<crate::types::Client> {
     HyprlandSocket::connect()?.active_window()
 }
 
 /// The `hyprctl activewindow` command.
-pub fn clients() -> std::io::Result<Vec<crate::types::ActiveWindow>> {
+pub fn clients() -> std::io::Result<Vec<crate::types::Client>> {
     HyprlandSocket::connect()?.clients()
 }
 

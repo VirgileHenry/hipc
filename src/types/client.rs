@@ -2,7 +2,7 @@
 #[derive(Debug, Clone)]
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ActiveWindow {
+pub struct Client {
     pub address: crate::types::WindowAddress,
     pub mapped: bool,
     pub hidden: bool,

@@ -1,6 +1,6 @@
 //! Common types used by Hyprland.
 
-mod active_window;
+mod client;
 mod content_type;
 mod direct_scanout_blocked_reason;
 mod fullscreen_mode;
@@ -26,7 +26,7 @@ mod workspace_id;
 mod workspace_id_and_name;
 mod workspace_name;
 
-pub use active_window::ActiveWindow;
+pub use client::Client;
 pub use content_type::ContentType;
 pub use direct_scanout_blocked_reason::DirectScanoutBlockedReason;
 pub use fullscreen_mode::FullscreenMode;
