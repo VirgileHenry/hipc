@@ -9,6 +9,8 @@ impl std::str::FromStr for crate::HyprlandEvent {
         let (event_kind, data) = s
             .split_once(">>")
             .ok_or(InvalidEvent::MalformedEvent { event: s.to_string() })?;
+        /* Remove the ending newline */
+        let data = data.trim_end();
 
         let malformed_data = || InvalidEvent::MalformedData {
             for_event: event_kind.to_string(),

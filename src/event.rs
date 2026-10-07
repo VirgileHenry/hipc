@@ -1,6 +1,7 @@
 /// All events emmited by Hyprland.
 ///
 /// See [https://wiki.hypr.land/IPC/].
+#[derive(Debug, Clone)]
 pub enum HyprlandEvent {
     /// Emitted on workspace change.
     ///
