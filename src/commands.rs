@@ -41,6 +41,12 @@ impl HyprlandSocket {
         serde_json::from_str(&out).map_err(std::io::Error::other)
     }
 
+    /// Request the active window with the `activewindow` command.
+    pub fn clients(&self) -> std::io::Result<Vec<crate::types::ActiveWindow>> {
+        let out = self.command("j/clients")?;
+        serde_json::from_str(&out).map_err(std::io::Error::other)
+    }
+
     /// Request all monitors with the `monitors` command.
     pub fn monitors(&self) -> std::io::Result<Vec<crate::types::Monitor>> {
         let out = self.command("j/monitors")?;
@@ -59,12 +65,17 @@ pub fn active_window() -> std::io::Result<crate::types::ActiveWindow> {
     HyprlandSocket::connect()?.active_window()
 }
 
+/// The `hyprctl activewindow` command.
+pub fn clients() -> std::io::Result<Vec<crate::types::ActiveWindow>> {
+    HyprlandSocket::connect()?.clients()
+}
+
 /// The `hyprctl monitors` command.
 pub fn monitors() -> std::io::Result<Vec<crate::types::Monitor>> {
     HyprlandSocket::connect()?.monitors()
 }
 
 /// The `hyprctl workspaces` command.
-pub fn workspace() -> std::io::Result<Vec<crate::types::Workspace>> {
+pub fn workspaces() -> std::io::Result<Vec<crate::types::Workspace>> {
     HyprlandSocket::connect()?.workspaces()
 }
