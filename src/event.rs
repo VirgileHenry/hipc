@@ -43,7 +43,7 @@ pub enum HyprlandEvent {
     /// Emitted on the active window being changed.
     ActiveWindowV2 {
         /// WINDOWADDRESS
-        address: crate::types::WindowAddress,
+        address: Option<crate::types::WindowAddress>,
     },
     /// emitted when a fullscreen status of a window changes.
     Fullscreen {

@@ -90,7 +90,10 @@ impl std::str::FromStr for crate::HyprlandEvent {
                 })
             }
             "activewindowv2" => Ok(Self::ActiveWindowV2 {
-                address: data.parse().map_err(|_| malformed_data())?,
+                address: match data {
+                    "" => None,
+                    non_empty_data => Some(non_empty_data.parse().map_err(|_| malformed_data())?),
+                },
             }),
             "fullscreen" => {
                 let enter_fullscreen = match data {
